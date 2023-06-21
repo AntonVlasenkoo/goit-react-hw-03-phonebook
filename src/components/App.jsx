@@ -4,11 +4,31 @@ import { ContactsList } from './contactsList/ContactsList';
 import { Filter } from './filter/Filter';
 import toast, { Toaster } from 'react-hot-toast';
 import css from 'APP.module.css';
+
+const LS_KEY = 'Contacts';
+
 export class App extends Component {
   state = {
     contacts: [],
     filter: '',
   };
+
+  componentDidMount() {
+    const savedContacts = localStorage.getItem(LS_KEY);
+    const parsedContacts = JSON.parse(savedContacts);
+
+    if (parsedContacts) {
+      this.setState(() => ({ contacts: parsedContacts }));
+    }
+  }
+
+  componentDidUpdate(_, prevState) {
+    const prevContacts = prevState.contacts;
+    const currentContacts = this.state.contacts;
+    if (prevContacts !== currentContacts) {
+      localStorage.setItem(LS_KEY, JSON.stringify(currentContacts));
+    }
+  }
 
   formSubmitHandler = data => {
     console.log(data);
