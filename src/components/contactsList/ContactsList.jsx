@@ -8,7 +8,8 @@ export function ContactsList({ contacts, deleteContact }) {
       {contacts.map(contact => {
         return (
           <li key={contact.id}>
-            <span>{contact.name}</span>: <span>{contact.number}</span>
+            <span>{contact.name.toLowerCase()}</span>:{' '}
+            <span>{contact.number}</span>
             <button
               className={css.button}
               onClick={() => {
